@@ -8,15 +8,10 @@ x-base_service: &base_service
       - &v2 ./output:/output
     stop_signal: SIGKILL
     tty: true
-    deploy:
-      resources:
-        reservations:
-          devices:
-              - driver: nvidia
-                device_ids: ['0']
-                capabilities: [compute, utility]
+    devices:
+      - nvidia.com/gpu=all
 
-name: webui-docker
+name: webui-podman
 
 services:
   download:
@@ -33,12 +28,12 @@ services:
     environment:
       - CLI_ARGS=--allow-code --medvram --xformers --enable-insecure-extension-access --api
 
-  auto-cpu:
-    <<: *automatic
-    profiles: ["auto-cpu"]
-    deploy: {}
-    environment:
-      - CLI_ARGS=--no-half --precision full --allow-code --enable-insecure-extension-access --api
+  #auto-cpu:
+  #  <<: *automatic
+  #  profiles: ["auto-cpu"]
+  #  deploy: {}
+  #  environment:
+  #    - CLI_ARGS=--no-half --precision full --allow-code --enable-insecure-extension-access --api
 
   invoke: &invoke
     <<: *base_service
@@ -64,10 +59,9 @@ services:
     environment:
       - CLI_ARGS=
 
-
-  comfy-cpu:
-    <<: *comfy
-    profiles: ["comfy-cpu"]
-    deploy: {}
-    environment:
-      - CLI_ARGS=--cpu
+  #comfy-cpu:
+  #  <<: *comfy
+  #  profiles: ["comfy-cpu"]
+  #  deploy: {}
+  #  environment:
+  #    - CLI_ARGS=--cpu

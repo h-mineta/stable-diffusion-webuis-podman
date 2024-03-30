@@ -1,4 +1,4 @@
-# Stable Diffusion WebUI Docker
+# Stable Diffusion WebUI Podman
 
 Run Stable Diffusion on your machine with a nice UI without any hassle!
 
