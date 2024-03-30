@@ -24,20 +24,20 @@ services:
     build: ./services/AUTOMATIC1111
     environment:
       - CLI_ARGS=--allow-code --medvram --xformers --enable-insecure-extension-access --api
-
-  invoke: &invoke
-    <<: *base_service
-    profiles: ["invoke"]
-    build: ./services/invoke/
-    environment:
-      - PRELOAD=true
-      - CLI_ARGS=--xformers
-
-  comfy: &comfy
-    <<: *base_service
-    profiles: ["comfy"]
-    build: ./services/comfy/
-    environment:
-      - CLI_ARGS=
     ports:
       - "${WEBUI_PORT:-7860}:7860"
+
+  #invoke: &invoke
+  #  <<: *base_service
+  #  profiles: ["invoke"]
+  #  build: ./services/invoke/
+  #  environment:
+  #    - PRELOAD=true
+  #    - CLI_ARGS=--xformers
+
+  #comfy: &comfy
+  #  <<: *base_service
+  #  profiles: ["comfy"]
+  #  build: ./services/comfy/
+  #  environment:
+  #    - CLI_ARGS=
