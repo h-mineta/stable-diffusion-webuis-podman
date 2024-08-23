@@ -54,3 +54,12 @@ Special thanks to everyone behind these awesome projects, without them, none of 
 - [CompVis/stable-diffusion](https://github.com/CompVis/stable-diffusion)
 - [Sygil-webui](https://github.com/Sygil-Dev/sygil-webui)
 - and many many more.
+
+
+## Play K8s
+```bash
+cd /opt
+git clone https://github.com/h-mineta/stable-diffusion-webui-podman.git
+cd stable-diffusion-webui-podman
+podman play kube stable-diffusion-pod.yaml
+```
