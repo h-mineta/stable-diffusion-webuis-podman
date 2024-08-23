@@ -25,19 +25,23 @@ services:
     environment:
       - CLI_ARGS=--allow-code --medvram --xformers --enable-insecure-extension-access --api
     ports:
-      - "${WEBUI_PORT:-7860}:7860"
+      - "7860:7860"
 
-  #invoke: &invoke
-  #  <<: *base_service
-  #  profiles: ["invoke"]
-  #  build: ./services/invoke/
-  #  environment:
-  #    - PRELOAD=true
-  #    - CLI_ARGS=--xformers
+  invoke: &invoke
+    <<: *base_service
+    profiles: ["invoke"]
+    build: ./services/invoke/
+    environment:
+      - PRELOAD=true
+      - CLI_ARGS=--xformers
+    ports:
+      - "7861:7861"
 
-  #comfy: &comfy
-  #  <<: *base_service
-  #  profiles: ["comfy"]
-  #  build: ./services/comfy/
-  #  environment:
-  #    - CLI_ARGS=
+  comfy: &comfy
+    <<: *base_service
+    profiles: ["comfy"]
+    build: ./services/comfy/
+    environment:
+      - CLI_ARGS=
+    ports:
+      - "7862:7862"
