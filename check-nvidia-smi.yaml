@@ -1,0 +1,18 @@
+# Created with podman-5.2.1
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2024-08-23T12:47:25Z"
+  labels:
+    app: check-nvidia
+  name: check-nvidia
+spec:
+  containers:
+  - name: container-cuda
+    image: docker.io/nvidia/cuda:12.6.0-cudnn-runtime-rockylinux9
+    tty: true
+    command: ["nvidia-smi"]
+    resources:
+      limits:
+        nvidia.com/gpu: 1
+  restartPolicy: Never

@@ -3,6 +3,42 @@
 Run Stable Diffusion on your machine with a nice UI without any hassle!
 
 ## Setup & Usage
+```bash
+sudo dnf install -y nvidia-container-toolkit
+sudo nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml
+sudo sed -i 's/^#no-cgroups = false/no-cgroups = true/;' /etc/nvidia-container-runtime/config.toml
+
+sudo mkdir -p /usr/share/containers/oci/hooks.d/
+cat << '_EOL_' | sudo tee /usr/share/containers/oci/hooks.d/oci-nvidia-hook.json > /dev/null
+{
+    "version": "1.0.0",
+    "hook": {
+        "path": "/usr/bin/nvidia-container-runtime-hook",
+        "args": ["nvidia-container-runtime-hook", "prestart"],
+        "env": [
+            "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+        ]
+    },
+    "when": {
+        "always": true,
+        "commands": [".*"]
+    },
+    "stages": ["prestart"]
+}
+_EOL_
+
+cd /opt
+git clone https://github.com/h-mineta/stable-diffusion-webuis-podman.git
+cd stable-diffusion-webuis-podman
+
+# check NVIDIA GPU(nvidia-smi)
+podman play kube --replace check-nvidia-smi.yaml
+podman pod logs check-nvidia
+podman pod rm check-nvidia
+
+chmod +x start.sh
+./start.sh
+```
 
 Visit the wiki for [Setup](https://github.com/AbdBarho/stable-diffusion-webui-docker/wiki/Setup) and [Usage](https://github.com/AbdBarho/stable-diffusion-webui-docker/wiki/Usage) instructions, checkout the [FAQ](https://github.com/AbdBarho/stable-diffusion-webui-docker/wiki/FAQ) page if you face any problems, or create a new issue!
 
@@ -54,12 +90,3 @@ Special thanks to everyone behind these awesome projects, without them, none of 
 - [CompVis/stable-diffusion](https://github.com/CompVis/stable-diffusion)
 - [Sygil-webui](https://github.com/Sygil-Dev/sygil-webui)
 - and many many more.
-
-
-## Play K8s
-```bash
-cd /opt
-git clone https://github.com/h-mineta/stable-diffusion-webui-podman.git
-cd stable-diffusion-webui-podman
-podman play kube stable-diffusion-pod.yaml
-```
