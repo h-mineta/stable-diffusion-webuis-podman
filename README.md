@@ -48,6 +48,8 @@ This repository provides multiple UIs for you to play around with stable diffusi
 
 ### [AUTOMATIC1111](https://github.com/AUTOMATIC1111/stable-diffusion-webui)
 
+http://localhost:7860
+
 [Full feature list here](https://github.com/AUTOMATIC1111/stable-diffusion-webui-feature-showcase), Screenshots:
 
 | Text to image                                                                                              | Image to image                                                                                             | Extras                                                                                                     |
@@ -56,6 +58,8 @@ This repository provides multiple UIs for you to play around with stable diffusi
 
 ### [InvokeAI](https://github.com/invoke-ai/InvokeAI)
 
+http://localhost:7861
+
 [Full feature list here](https://github.com/invoke-ai/InvokeAI#features), Screenshots:
 
 | Text to image                                                                                              | Image to image                                                                                             | Extras                                                                                                     |
@@ -63,6 +67,8 @@ This repository provides multiple UIs for you to play around with stable diffusi
 | ![](https://user-images.githubusercontent.com/24505302/195158552-39f58cb6-cfcc-4141-9995-a626e3760752.jpg) | ![](https://user-images.githubusercontent.com/24505302/195158553-152a0ab8-c0fd-4087-b121-4823bcd8d6b5.jpg) | ![](https://user-images.githubusercontent.com/24505302/195158548-e118206e-c519-4915-85d6-4c248eb10fc0.jpg) |
 
 ### [ComfyUI](https://github.com/comfyanonymous/ComfyUI)
+
+http://localhost:7862
 
 [Full feature list here](https://github.com/comfyanonymous/ComfyUI#features), Screenshot:
 
