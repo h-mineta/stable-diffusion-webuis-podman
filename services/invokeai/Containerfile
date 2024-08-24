@@ -1,0 +1,16 @@
+FROM ghcr.io/invoke-ai/invokeai:sha-231e5ec-cuda
+
+ENV DEBIAN_FRONTEND=noninteractive PIP_EXISTS_ACTION=w PIP_PREFER_BINARY=1
+
+RUN --mount=type=cache,target=/var/cache/apt \
+    apt-get update && \
+    apt-get clean
+
+ENV ROOT=/opt/invokeai
+WORKDIR ${ROOT}
+
+ENV NVIDIA_VISIBLE_DEVICES=all
+ENV PYTHONUNBUFFERED=1 PRELOAD=false HF_HOME=/root/.cache/huggingface CONFIG_DIR=/data/config/invoke
+EXPOSE 7861
+
+ENTRYPOINT ["invokeai-web"]

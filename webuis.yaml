@@ -25,11 +25,19 @@ spec:
       name: volume-data
     tty: true
   containers:
-  - args:
-    - /bin/sh
-    - -c
-    - python -u webui.py --listen --port 7860 ${CLI_ARGS}
-    image: localhost/container-automatic1111:latest
+  - image: localhost/container-automatic1111:latest
+    args:
+    - python3
+    - -u
+    - webui.py
+    - --listen
+    - --port
+    - 7860
+    - --allow-code
+    - --medvram
+    - --xformers
+    - --enable-insecure-extension-access
+    - --api
     name: container-automatic1111
     volumeMounts:
     - mountPath: /data
@@ -39,21 +47,12 @@ spec:
     ports:
     - containerPort: 7860
       hostPort: 7860
-    env:
-    - name: CLI_ARGS
-      value: "--allow-code --medvram --xformers --enable-insecure-extension-access --api"
     tty: true
     resources:
       limits:
         nvidia.com/gpu: 1
-  - args:
-    - /bin/sh
-    - -c
-    - invokeai --web --host 0.0.0.0 --port 7861 --root_dir ${ROOT} --config ${CONFIG_DIR}/models.yaml     --outdir
-      /output/invoke --embedding_directory /data/embeddings/ --lora_directory /data/models/Lora     --no-nsfw_checker
-      --no-safety_checker ${CLI_ARGS}
-    image: localhost/container-invoke:latest
-    name: container-invoke
+  - image: localhost/container-invokeai:latest
+    name: container-invokeai
     volumeMounts:
     - mountPath: /data
       name: volume-data
@@ -63,19 +62,20 @@ spec:
     - containerPort: 7861
       hostPort: 7861
     env:
-    - name: CLI_ARGS
-      value: "--xformers"
-    - name: PRELOAD
-      value: true
+    - name: INVOKEAI_PORT
+      value: 7861
     tty: true
     resources:
       limits:
         nvidia.com/gpu: 1
-  - args:
-    - /bin/sh
-    - -c
-    - python -u main.py --listen --port 7862 ${CLI_ARGS}
-    image: localhost/container-comfy:latest
+  - image: localhost/container-comfy:latest
+    args:
+    - python3
+    - -u
+    - main.py
+    - --listen
+    - --port
+    - 7862
     name: container-comfy
     volumeMounts:
     - mountPath: /output
@@ -85,9 +85,6 @@ spec:
     ports:
     - containerPort: 7862
       hostPort: 7862
-    env:
-    - name: CLI_ARGS
-      value: ""
     tty: true
     resources:
       limits:
