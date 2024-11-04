@@ -6,6 +6,7 @@ Run Stable Diffusion on your machine with a nice UI without any hassle!
 ```bash
 sudo dnf install -y nvidia-container-toolkit
 sudo nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml
+sudo nvidia-ctk config --set nvidia-container-cli.no-cgroups --in-place
 sudo sed -i 's/^#no-cgroups = false/no-cgroups = true/;' /etc/nvidia-container-runtime/config.toml
 
 sudo mkdir -p /usr/share/containers/oci/hooks.d/
